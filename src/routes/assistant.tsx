@@ -75,6 +75,7 @@ function VoiceAssistantPage() {
     stopSpeech,
     announce,
     addHistoryEntry,
+    setSetupOpen,
   } = useDrishti();
 
   const [micState, setMicState] = useState<MicState>("idle");
@@ -226,6 +227,7 @@ function VoiceAssistantPage() {
           </div>
 
           <div className="flex items-center gap-2">
+            <Button variant="outline" className="min-h-12" onClick={() => setSetupOpen(true)}>First-use setup</Button>
             <span
               role="status"
               className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-subtle px-3.5 py-1.5 text-sm font-semibold text-foreground"

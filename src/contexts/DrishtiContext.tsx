@@ -98,6 +98,8 @@ const STORAGE_KEYS = {
 };
 
 interface DrishtiContextValue {
+  setupOpen: boolean;
+  setSetupOpen: (open: boolean) => void;
   languages: LanguagePreferences;
   updateLanguages: (patch: Partial<LanguagePreferences>) => void;
   accessibility: AccessibilityPreferences;
@@ -116,6 +118,7 @@ interface DrishtiContextValue {
 const DrishtiContext = createContext<DrishtiContextValue | null>(null);
 
 export function DrishtiProvider({ children }: { children: ReactNode }) {
+  const [setupOpen, setSetupOpen] = useState(false);
   const [languages, setLanguages] = useState<LanguagePreferences>(DEFAULT_LANGUAGES);
   const [accessibility, setAccessibility] = useState<AccessibilityPreferences>(DEFAULT_ACCESSIBILITY);
   const [history, setHistory] = useState<ConversationEntry[]>(() => createInitialSampleHistory());
@@ -126,6 +129,7 @@ export function DrishtiProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
+      setSetupOpen(localStorage.getItem("drishtivoice_setup_v1") === null);
       const savedLang = localStorage.getItem(STORAGE_KEYS.languages);
       if (savedLang) setLanguages({ ...DEFAULT_LANGUAGES, ...JSON.parse(savedLang) });
       const savedA11y = localStorage.getItem(STORAGE_KEYS.accessibility);
@@ -136,6 +140,7 @@ export function DrishtiProvider({ children }: { children: ReactNode }) {
       }
     } catch {
       // Ignore malformed storage
+      setSetupOpen(true);
     }
     setHydrated(true);
   }, []);
@@ -238,12 +243,14 @@ export function DrishtiProvider({ children }: { children: ReactNode }) {
   const currentLanguageMeta = useMemo(
     () =>
       SUPPORTED_LANGUAGES.find((l) => l.code === languages.speakingLanguage) ??
-      SUPPORTED_LANGUAGES[0]!,
+      { code: "en-IN", name: "English", nativeName: "English (India)", samplePhrase: "Welcome to DrishtiVoice." } as LanguageOption,
     [languages.speakingLanguage],
   );
 
   const value = useMemo<DrishtiContextValue>(
     () => ({
+      setupOpen,
+      setSetupOpen,
       languages,
       updateLanguages,
       accessibility,
@@ -259,6 +266,7 @@ export function DrishtiProvider({ children }: { children: ReactNode }) {
       currentLanguageMeta,
     }),
     [
+      setupOpen,
       languages,
       updateLanguages,
       accessibility,

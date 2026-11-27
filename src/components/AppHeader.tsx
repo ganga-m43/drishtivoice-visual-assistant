@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Globe, Menu, X } from "lucide-react";
+import { Globe, Menu, X, CircleHelp } from "lucide-react";
 import { useState } from "react";
 import { DrishtiLogo } from "@/components/DrishtiLogo";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,7 @@ const NAV_ITEMS = [
 export function AppHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const { currentLanguageMeta } = useDrishti();
+  const { currentLanguageMeta, setSetupOpen } = useDrishti();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
@@ -34,7 +34,7 @@ export function AppHeader() {
                 key={item.to}
                 to={item.to}
                 aria-current={isActive ? "page" : undefined}
-                className={`inline-flex min-h-11 items-center rounded-lg px-3.5 text-sm font-medium transition-colors ${
+                className={`inline-flex min-h-11 items-center rounded-lg px-2.5 text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-primary text-primary-foreground"
                     : "text-foreground hover:bg-muted"
@@ -47,6 +47,7 @@ export function AppHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <Button variant="ghost" size="icon" className="min-h-12 min-w-12" aria-label="First-use setup" title="First-use setup" onClick={() => setSetupOpen(true)}><CircleHelp aria-hidden="true" /></Button>
           <Link
             to="/languages"
             aria-label={`Current language: ${currentLanguageMeta.name}. Change language`}
@@ -78,6 +79,7 @@ export function AppHeader() {
           className="border-t border-border bg-card px-4 py-4 lg:hidden"
         >
           <ul className="flex flex-col gap-1.5">
+            <li><Button variant="outline" className="min-h-12 w-full" onClick={() => { setMobileOpen(false); setSetupOpen(true); }}>First-use setup</Button></li>
             {NAV_ITEMS.map((item) => {
               const isActive = pathname === item.to;
               return (

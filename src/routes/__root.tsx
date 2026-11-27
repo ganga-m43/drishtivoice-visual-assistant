@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { DrishtiProvider } from "@/contexts/DrishtiContext";
 import { Toaster } from "@/components/ui/sonner";
+import { FirstUseSetup } from "@/components/FirstUseSetup";
 
 function NotFoundComponent() {
   return (
@@ -150,6 +151,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <Toaster position="bottom-center" />
+        <FirstUseSetup />
       </DrishtiProvider>
     </QueryClientProvider>
   );

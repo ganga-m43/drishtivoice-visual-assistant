@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Keep first-use setup in a global accessible dialog backed by existing device-local preferences; it must be reopenable without changing the current page.
+- Isolate setup permission tests in a cancellable hook that releases media tracks on exit and ignores late permission results, so setup never leaves devices running.
