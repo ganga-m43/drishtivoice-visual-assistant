@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -126,6 +127,7 @@ export function DrishtiProvider({ children }: { children: ReactNode }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [politeAnnouncement, setPoliteAnnouncement] = useState("");
   const [assertiveAnnouncement, setAssertiveAnnouncement] = useState("");
+  const greetedRef = useRef(false);
 
   useEffect(() => {
     try {
@@ -239,6 +241,42 @@ export function DrishtiProvider({ children }: { children: ReactNode }) {
       queueMicrotask(() => setPoliteAnnouncement(message));
     }
   }, []);
+
+  useEffect(() => {
+    if (!hydrated || greetedRef.current) return;
+    greetedRef.current = true;
+    const greeting = "Hello, you can ask me questions.";
+    announce(greeting, "polite");
+    let started = false;
+    const sayGreeting = () => {
+      speakText(greeting, {
+        lang: languages.responseLanguage,
+        rate: accessibility.voiceSpeed,
+        volume: accessibility.voiceVolume,
+        ...(accessibility.preferredVoiceURI
+          ? { voiceURI: accessibility.preferredVoiceURI }
+          : {}),
+        onStart: () => {
+          started = true;
+          setIsSpeaking(true);
+        },
+        onEnd: () => setIsSpeaking(false),
+        onError: () => setIsSpeaking(false),
+      });
+    };
+    sayGreeting();
+    const onFirstInteraction = () => {
+      window.removeEventListener("pointerdown", onFirstInteraction);
+      window.removeEventListener("keydown", onFirstInteraction);
+      if (!started) sayGreeting();
+    };
+    window.addEventListener("pointerdown", onFirstInteraction, { once: true });
+    window.addEventListener("keydown", onFirstInteraction, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", onFirstInteraction);
+      window.removeEventListener("keydown", onFirstInteraction);
+    };
+  }, [hydrated, announce, languages.responseLanguage, accessibility.voiceSpeed, accessibility.voiceVolume, accessibility.preferredVoiceURI]);
 
   const currentLanguageMeta = useMemo(
     () =>

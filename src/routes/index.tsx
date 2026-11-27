@@ -114,17 +114,17 @@ function Index() {
               An intelligent visual assistant that helps blind and visually impaired people
               understand the world around them using natural voice conversations.
             </p>
-            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="min-h-13 gap-2 bg-primary px-7 text-base font-semibold text-primary-foreground hover:bg-primary/90"
+            <div className="flex flex-col items-center gap-5 pt-4">
+              <Link
+                to="/talk"
+                aria-label="Start Voice Assistant"
+                className="group relative flex h-48 w-48 flex-col items-center justify-center gap-3 rounded-full bg-primary p-6 text-center text-primary-foreground shadow-xl ring-8 ring-primary/15 transition-transform hover:scale-105 hover:bg-primary/95 focus-visible:scale-105 sm:h-56 sm:w-56"
               >
-                <Link to="/talk">
-                  <Mic className="h-5 w-5" aria-hidden="true" />
+                <Mic className="h-14 w-14 sm:h-16 sm:w-16" aria-hidden="true" />
+                <span className="text-lg font-extrabold leading-tight sm:text-xl">
                   Start Voice Assistant
-                </Link>
-              </Button>
+                </span>
+              </Link>
               <Button
                 asChild
                 variant="outline"
