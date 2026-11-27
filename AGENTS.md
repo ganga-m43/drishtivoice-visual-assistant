@@ -33,3 +33,4 @@ use the editor.
 - Isolate setup permission tests in a cancellable hook that releases media tracks on exit and ignores late permission results, so setup never leaves devices running.
 - Camera AI calls use a validated TanStack server function and the AI Gateway SDK with inline images only; never accept remote image URLs or expose model credentials to the browser.
 - Use device speech recognition and synthesis for camera questions and spoken answers; preserve typed input and replay controls when device speech is unavailable.
+- Hands-free mode (/talk) is the primary blind-user flow: one full-screen button, spoken commands parsed in src/lib/voice-commands.ts, live camera frames sent to the existing vision server function; keep it usable with zero visual reading.

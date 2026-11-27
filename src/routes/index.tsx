@@ -90,6 +90,13 @@ const STEPS = [
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Link
+        to="/talk"
+        className="flex min-h-16 items-center justify-center gap-3 bg-accent px-4 py-4 text-center text-lg font-bold text-accent-foreground"
+      >
+        <Mic className="h-6 w-6" aria-hidden="true" />
+        Blind or low vision? Open hands-free mode — tap once and just speak.
+      </Link>
       <AppHeader />
 
       {/* Hero Section */}
@@ -113,7 +120,7 @@ function Index() {
                 size="lg"
                 className="min-h-13 gap-2 bg-primary px-7 text-base font-semibold text-primary-foreground hover:bg-primary/90"
               >
-                <Link to="/assistant">
+                <Link to="/talk">
                   <Mic className="h-5 w-5" aria-hidden="true" />
                   Start Voice Assistant
                 </Link>

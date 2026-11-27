@@ -7,6 +7,7 @@ import { useDrishti } from "@/contexts/DrishtiContext";
 
 const NAV_ITEMS = [
   { to: "/", label: "Home" },
+  { to: "/talk", label: "Hands-free" },
   { to: "/assistant", label: "Voice Assistant" },
   { to: "/camera", label: "Camera" },
   { to: "/languages", label: "Languages" },

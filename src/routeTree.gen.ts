@@ -15,6 +15,7 @@ import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as CameraRouteImport } from './routes/camera'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as LanguagesRouteImport } from './routes/languages'
+import { Route as TalkRouteImport } from './routes/talk'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +47,11 @@ const LanguagesRoute = LanguagesRouteImport.update({
   path: '/languages',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TalkRoute = TalkRouteImport.update({
+  id: '/talk',
+  path: '/talk',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/camera': typeof CameraRoute
   '/history': typeof HistoryRoute
   '/languages': typeof LanguagesRoute
+  '/talk': typeof TalkRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/camera': typeof CameraRoute
   '/history': typeof HistoryRoute
   '/languages': typeof LanguagesRoute
+  '/talk': typeof TalkRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/camera': typeof CameraRoute
   '/history': typeof HistoryRoute
   '/languages': typeof LanguagesRoute
+  '/talk': typeof TalkRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/history'
     | '/languages'
+    | '/talk'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/history'
     | '/languages'
+    | '/talk'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/camera'
     | '/history'
     | '/languages'
+    | '/talk'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   CameraRoute: typeof CameraRoute
   HistoryRoute: typeof HistoryRoute
   LanguagesRoute: typeof LanguagesRoute
+  TalkRoute: typeof TalkRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LanguagesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/talk': {
+      id: '/talk'
+      path: '/talk'
+      fullPath: '/talk'
+      preLoaderRoute: typeof TalkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   CameraRoute: CameraRoute,
   HistoryRoute: HistoryRoute,
   LanguagesRoute: LanguagesRoute,
+  TalkRoute: TalkRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
