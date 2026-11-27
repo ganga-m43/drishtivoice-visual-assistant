@@ -4,6 +4,7 @@
 - [ ] Verify device cleanup, permission failures, and desktop/mobile completion.
 
 # Camera and spoken-question AI
+- [x] Fix the unsupported AI Gateway response-storage option and verify compilation.
 - [ ] Connect AI Gateway for image-grounded answers in the selected language.
 - [ ] Add image upload, spoken questions, and automatic spoken answers to Camera Assistance.
 - [ ] Test input validation, error recovery, and the complete image/question/answer flow.
